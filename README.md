@@ -1,12 +1,15 @@
 # Bluebird
 
-TODO: Write a gem description
+Bluebird modifies your tweets, mostly to fit 140 characters.  
+It uses "strategies". Every strategy makes its own modifications to the tweets.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
-    gem 'bluebird'
+````ruby
+gem 'bluebird'
+````
 
 And then execute:
 
@@ -15,15 +18,44 @@ And then execute:
 Or install it yourself as:
 
     $ gem install bluebird
+    
+## Configuration
+
+You do not need any configuration to start using bluebird but it is intended  for a quick start. <code>characters_reserved_per_media</code>, <code>short_url_length_https</code> and <code>short_url_length</code> can change any time, **it is your duty** to fetch these values from twitter API and change bluebird configuration. For more information visit [twitter docs](https://dev.twitter.com/docs/api/1.1/get/help/configuration).
+
+
+These are the default values:
+
+````ruby
+Bluebird.configure do |config|
+  config.strategies                    = [:strip, :squeeze, :truncate]
+  config.max_length                    = 140
+  config.characters_reserved_per_media = 23
+  config.short_url_length_https        = 23
+  config.short_url_length              = 22
+  
+  config.truncate.omission             = '...'
+end
+````
+
+If you want to change defaults for Rails, create a file in <code>initializers</code> folder and copy the code above.  
+
+By default bluebird runs three strategies in these order; <code>strip</code>, <code>squeeze</code> and <code>truncate</code>. For detailed information about each strategy, visit Strategies.
 
 ## Usage
 
-TODO: Write usage instructions here
+````ruby
+Bluebird.modify('The bluebirds are a group of medium-sized, mostly insectivorous or omnivorous birds in the genus Sialia of the thrush family (Turdidae). #bluebird #animals')
+# => 'The bluebirds are a group of medium-sized, mostly insectivorous or omnivorous birds in the genus Sialia of the thrush ... #bluebird #animals'
+````
 
-## Contributing
+If uploading media:
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+````ruby
+Bluebird.modify('The bluebirds are a group of medium-sized, mostly insectivorous or omnivorous birds in the genus Sialia of the thrush family (Turdidae). #bluebird #animals', media: true)
+# => 'The bluebirds are a group of medium-sized, mostly insectivorous or omnivorous birds in the genu... #bluebird #animals'
+````
+
+## License
+
+Bluebird is released under the [MIT License](https://github.com/emrekutlu/bluebird/blob/master/LICENSE.txt).
