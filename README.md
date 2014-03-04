@@ -40,7 +40,7 @@ end
 
 If you want to change defaults for Rails, create a file in <code>initializers</code> folder and copy the code above.  
 
-By default bluebird runs three strategies in these order; <code>strip</code>, <code>squeeze</code> and <code>truncate</code>. For detailed information about each strategy, visit Strategies.
+By default bluebird runs three strategies in these order; <code>strip</code>, <code>squeeze</code> and <code>truncate</code>. For detailed information about each strategy, visit [Strategies](https://github.com/emrekutlu/bluebird/wiki/Strategies).
 
 ## Usage
 
