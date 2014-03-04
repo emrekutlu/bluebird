@@ -1,7 +1,8 @@
 # Bluebird
 
 Bluebird modifies your tweets, mostly to fit 140 characters.  
-It uses "strategies". Every strategy makes its own modifications to the tweets.
+It uses "strategies". Every strategy makes its own modifications to the tweets.  
+It does not ensure that tweet will fit 140 characters. (More strategies will be added to ensure it.)
 
 ## Installation
 
