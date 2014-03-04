@@ -28,7 +28,7 @@ These are the default values:
 
 ````ruby
 Bluebird.configure do |config|
-  config.strategies                    = [:strip, :squeeze, :truncate]
+  config.strategies                    = [:strip, :squeeze, :truncate_text]
   config.max_length                    = 140
   config.characters_reserved_per_media = 23
   config.short_url_length_https        = 23
