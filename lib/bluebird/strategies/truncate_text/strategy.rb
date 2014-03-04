@@ -1,6 +1,6 @@
 module Bluebird
   module Strategies
-    module Truncate
+    module TruncateText
       class Strategy < Bluebird::Strategies::Base
         class << self
 
@@ -137,7 +137,7 @@ module Bluebird
           end
 
           def omission
-            Bluebird::Strategies::Truncate::Config.omission
+            Bluebird::Strategies::TruncateText::Config.omission
           end
 
         end

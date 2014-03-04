@@ -1,6 +1,6 @@
 module Bluebird
   module Strategies
-    module Truncate
+    module TruncateText
       class Config
 
         @omission = '...'

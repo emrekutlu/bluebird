@@ -1,7 +1,7 @@
 module Bluebird
   class Config
 
-    @strategies                    = [:strip, :squeeze, :truncate]
+    @strategies                    = [:strip, :squeeze, :truncate_text]
     @max_length                    = 140
     @characters_reserved_per_media = 23
     @short_url_length_https        = 23

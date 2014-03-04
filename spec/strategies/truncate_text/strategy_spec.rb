@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Bluebird::Strategies::Truncate::Strategy do
+describe Bluebird::Strategies::TruncateText::Strategy do
 
-  let!(:strategy) { Bluebird::Strategies::Truncate::Strategy }
+  let!(:strategy) { Bluebird::Strategies::TruncateText::Strategy }
 
   describe '#run?' do
     it 'returns true if tweet is longer than max' do
@@ -35,7 +35,7 @@ describe Bluebird::Strategies::Truncate::Strategy do
 
     context 'When tweet is longer than max' do
       it 'truncates the text partial which can handle all the truncation' do
-        Bluebird::Config.truncate.omission = '...'
+        Bluebird::Config.truncate_text.omission = '...'
         tweet = Bluebird::Tweet.new('Lorem ipsum #dolor sit #amet')
         strategy.send(:truncate, tweet, 20)
         expect(tweet.status).to eq '... #dolor sit #amet'
@@ -56,7 +56,7 @@ describe Bluebird::Strategies::Truncate::Strategy do
 
   describe '#truncate_partials' do
 
-    before(:all) { Bluebird::Config.truncate.omission = '...' }
+    before(:all) { Bluebird::Config.truncate_text.omission = '...' }
 
     it 'truncates the text partials' do
       tweet = Bluebird::Tweet.new('Lorem ipsum @dolor sit')
@@ -139,7 +139,7 @@ describe Bluebird::Strategies::Truncate::Strategy do
   describe '#add_omission' do
     context 'When omission is present' do
 
-      before(:all) { Bluebird::Config.truncate.omission = '...' }
+      before(:all) { Bluebird::Config.truncate_text.omission = '...' }
 
       context 'and partial can handle the omission' do
 
@@ -169,7 +169,7 @@ describe Bluebird::Strategies::Truncate::Strategy do
     end
     context 'When omission is nil' do
       it 'does not add omission' do
-        Bluebird::Config.truncate.omission = nil
+        Bluebird::Config.truncate_text.omission = nil
         partial = Bluebird::Partial.new('Lorem ipsum', :text)
         strategy.send(:add_omission, partial)
         expect(partial.content).to eq 'Lorem ipsum'
@@ -177,7 +177,7 @@ describe Bluebird::Strategies::Truncate::Strategy do
     end
     context 'When omission is false' do
       it 'does not add omission' do
-        Bluebird::Config.truncate.omission = false
+        Bluebird::Config.truncate_text.omission = false
         partial = Bluebird::Partial.new('Lorem ipsum', :text)
         strategy.send(:add_omission, partial)
         expect(partial.content).to eq 'Lorem ipsum'
