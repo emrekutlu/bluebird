@@ -34,7 +34,7 @@ Bluebird.configure do |config|
   config.short_url_length_https        = 23
   config.short_url_length              = 22
   
-  config.truncate.omission             = '...'
+  config.truncate_text.omission        = '...'
 end
 ````
 
