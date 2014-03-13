@@ -60,6 +60,13 @@ describe Bluebird::Tweet do
   end
 
   describe '#extract_partials' do
+
+    context 'When status is empty' do
+      it 'does not add any partial' do
+        tweet = Bluebird::Tweet.new('')
+        expect(tweet.partials.length).to eq 0
+      end
+    end
     it 'breaks tweet into partials' do
       tweet = Bluebird::Tweet.new('Lorem ipsum')
       expect(tweet.partials.length).to eq 1
@@ -204,6 +211,52 @@ describe Bluebird::Tweet do
       partial = tweet.partials[3]
       expect(partial.content).to eq '@dolor'
       expect(partial.mention?).to be_true
+    end
+  end
+
+  describe '#add_partial' do
+
+    it 'sets the partial type' do
+      tweet = Bluebird::Tweet.new('Lorem ipsum dolor')
+      tweet.add_partial(' sit amet', :sit_amet)
+      expect(tweet.partials.last.partial_type).to be :sit_amet
+    end
+
+    context 'When there is no partials' do
+      it 'adds a new partial to the end of the tweet' do
+        tweet = Bluebird::Tweet.new('')
+        tweet.add_partial('Lorem ipsum', :text)
+        expect(tweet.partials.length).to be 1
+        partial = tweet.partials.first
+        expect(partial.prev_partial).to be nil
+        expect(partial.next_partial).to be nil
+      end
+    end
+
+    context 'When there is already one partial' do
+      it 'adds a new partial to the end of the tweet' do
+        tweet = Bluebird::Tweet.new('Lorem ipsum dolor')
+        expect(tweet.partials.length).to eq 1
+        tweet.add_partial(' sit amet', :text)
+        expect(tweet.partials.length).to eq 2
+        expect(tweet.partials.last.content).to eq ' sit amet'
+      end
+      it 'sets the next_partial of the first partial' do
+        tweet = Bluebird::Tweet.new('Lorem ipsum dolor')
+        first_partial = tweet.partials.first
+        tweet.add_partial(' sit amet', :sit_amet)
+        last_partial = tweet.partials.last
+        expect(first_partial.prev_partial).to be nil
+        expect(first_partial.next_partial).to be last_partial
+      end
+      it 'sets the prev_partial of the new partial' do
+        tweet = Bluebird::Tweet.new('Lorem ipsum dolor')
+        first_partial = tweet.partials.first
+        tweet.add_partial(' sit amet', :sit_amet)
+        last_partial = tweet.partials.last
+        expect(last_partial.prev_partial).to be first_partial
+        expect(last_partial.next_partial).to be nil
+      end
     end
   end
 end

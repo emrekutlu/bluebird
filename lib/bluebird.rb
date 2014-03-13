@@ -8,6 +8,7 @@ require 'bluebird/strategies/base'
 require 'bluebird/strategies/strip'
 require 'bluebird/strategies/squeeze'
 require 'bluebird/strategies/truncate_text'
+require 'bluebird/strategies/via'
 
 module Bluebird
   class << self

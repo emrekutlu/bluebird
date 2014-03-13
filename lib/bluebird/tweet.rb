@@ -7,7 +7,8 @@ module Bluebird
 
     def initialize(status, opts = {})
       @original_status = status
-      @partials = extract_partials(status)
+      @partials = []
+      extract_partials(status)
       @media = opts[:media] if opts.has_key?(:media)
     end
 
@@ -39,6 +40,19 @@ module Bluebird
       partials.select { |partial| partial.cashtag? }
     end
 
+    def add_partial(content, partial_type)
+      if eligible_content?(content)
+        partial = Partial.new(content, partial_type)
+
+        if (last = partials.last)
+          last.next_partial = partial
+          partial.prev_partial = last
+        end
+
+        partials << partial
+      end
+    end
+
     private
 
     def total_partial_length
@@ -59,35 +73,19 @@ module Bluebird
       entities = extract_entities_with_indices(status, extract_url_without_protocol: true)
       length   = status.char_length
       index    = 0
-      partials = []
 
       entities.each do |entity|
         first = entity[:indices].first
         last  = entity[:indices].last
 
-        add_partial(partials, status[index, first - index], :text)
-        add_partial(partials, status[first, last - first], entity_type(entity))
+        add_partial(status[index, first - index], :text)
+        add_partial(status[first, last - first], entity_type(entity))
 
         index = last
       end
 
       if ending_partial?(index, length)
-        add_partial(partials, status[index, length - index], :text)
-      end
-
-      partials
-    end
-
-    def add_partial(partials, content, partial_type)
-      if eligible_content?(content)
-        partial = Partial.new(content, partial_type)
-
-        if (last = partials.last)
-          last.next_partial = partial
-          partial.prev_partial = last
-        end
-
-        partials << partial
+        add_partial(status[index, length - index], :text)
       end
     end
 

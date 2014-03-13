@@ -1,6 +1,7 @@
 module Bluebird
   class Partial
 
+    attr_reader   :partial_type
     attr_accessor :content, :prev_partial, :next_partial
 
     def initialize(content, partial_type)
