@@ -1,4 +1,4 @@
-# Bluebird [![Gem Version](https://emrekutlu-test-1.appspot.com/gems/bluebird/version.png?right_bg=4183c4)](https://rubygems.org/gems/bluebird) [![Build Status](https://travis-ci.org/emrekutlu/bluebird.png?branch=master)](https://travis-ci.org/emrekutlu/bluebird)
+# Bluebird [![Gem Version](https://emrekutlu-test-1.appspot.com/gems/bluebird/version.png)](https://rubygems.org/gems/bluebird) [![Build Status](https://travis-ci.org/emrekutlu/bluebird.png?branch=master)](https://travis-ci.org/emrekutlu/bluebird)
 
 Bluebird modifies your tweets, mostly to fit 140 characters.  
 It uses "strategies". Every strategy makes its own modifications to the tweets.  
