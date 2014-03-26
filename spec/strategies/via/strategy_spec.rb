@@ -21,7 +21,7 @@ describe Bluebird::Strategies::Via::Strategy do
       end
     end
     context 'When username is iekutlu' do
-      it 'returns false' do
+      it 'returns true' do
         expect(strategy.send(:username_exists?, 'iekutlu')).to be_true
       end
     end
