@@ -1,4 +1,5 @@
 module Bluebird
+  # A tweet has one or more partials.
   class Tweet
 
     include Twitter::Extractor
@@ -12,30 +13,37 @@ module Bluebird
       @media = opts[:media] if opts.has_key?(:media)
     end
 
+    # @return [String]
     def status
       partials.map { |partial| partial.content }.join
     end
 
+    # @return [Integer]
     def length
       total_partial_length + media_length
     end
 
+    # @return [Array<Partial>]
     def text_partials
       partials.select { |partial| partial.text? }
     end
 
+    # @return [Array<Partial>]
     def url_partials
       partials.select { |partial| partial.url? }
     end
 
+    # @return [Array<Partial>]
     def mention_partials
       partials.select { |partial| partial.mention? }
     end
 
+    # @return [Array<Partial>]
     def hashtag_partials
       partials.select { |partial| partial.hashtag? }
     end
 
+    # @return [Array<Partial>]
     def cashtag_partials
       partials.select { |partial| partial.cashtag? }
     end

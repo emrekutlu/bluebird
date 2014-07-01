@@ -17,6 +17,8 @@ module Bluebird
       yield(Config)
     end
 
+    # Runs the strategies and returns the modified status.
+    # @return [String]
     def modify(status, opts = {})
       tweet = Bluebird::Tweet.new(status, opts)
       run_strategies(tweet)
